@@ -9,7 +9,20 @@ metadata = MetaData(naming_convention={
 
 db = SQLAlchemy(metadata=metadata)
 
-class Recipes(db.Model):
-    __tablename__ = 'recipes'
+class Recipe(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    ingredients = db.Column(db.Text, nullable=False)
+    instructions = db.Column(db.Text, nullable=False)
+    area = db.Column(db.Text, nullable=False)
 
-    pass
+
+    def __init__(self, title, ingredients, instructions,area):
+        self.title = title
+        self.ingredients = ingredients
+        self.instructions = instructions
+        self.area = area
+
+
+    def __repr__(self):
+        return f"<Recipe {self.title}>"
