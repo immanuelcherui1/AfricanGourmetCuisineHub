@@ -1,0 +1,25 @@
+.signup-container {
+  position: fixed;  
+  top: 50px;        
+  right: 340px;     
+  width: 300px;     
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background: white; 
+  z-index: 1000;    
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
