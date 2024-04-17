@@ -23,17 +23,13 @@ def submit_recipe_form():
 # Route to handle form submission and save data to the database
 @app.route('/submit_recipe', methods=['POST'])
 def submit_recipe():
-    data = request.form  # Assuming form data is sent as form-urlencoded
-    # Process the submitted recipe data and save to the database
-    # Example:
+    data = request.form  
+   
     title = data.get('title')
     ingredients = data.get('ingredients')
     instructions = data.get('instructions')
     area = data.get('area')
-    # Save data to the database using SQLAlchemy
-    # Example: recipe = Recipe(title=title, ingredients=ingredients, instructions=instructions, area=area)
-    # Example: db.session.add(recipe)
-    # Example: db.session.commit()
+   
     return jsonify({"message": "Recipe submitted successfully"}), 200
 
 if __name__ == '__main__':

@@ -17,11 +17,14 @@ class Recipe(db.Model):
     area = db.Column(db.Text, nullable=False)
 
 
-    def __init__(self, title, ingredients, instructions,area):
+    def __init__(self, title, ingredients, instructions,country,image):
         self.title = title
         self.ingredients = ingredients
         self.instructions = instructions
-        self.area = area
+        self.country = country
+        self.image = image
+
+
 
 
     def __repr__(self):

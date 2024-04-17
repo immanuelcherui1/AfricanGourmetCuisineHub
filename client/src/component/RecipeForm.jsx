@@ -33,7 +33,7 @@ const RecipeForm = () => {
             <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Title" />
             <textarea name="ingredients" value={formData.ingredients} onChange={handleChange} placeholder="Ingredients"></textarea>
             <textarea name="instructions" value={formData.instructions} onChange={handleChange} placeholder="Instructions"></textarea>
-            <textarea name="area" value={formData.area} onChange={handleChange} placeholder="Area"></textarea>
+            <textarea name="country" value={formData.area} onChange={handleChange} placeholder="country"></textarea>
             <button type="submit">Submit</button>
         </form>
     );
