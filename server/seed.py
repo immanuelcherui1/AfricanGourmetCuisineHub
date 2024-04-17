@@ -1,11 +1,11 @@
 from faker import Faker
-from server.models import Recipe
-from server.models import db
+from models import Recipe, db
+from app import app  
 
 fake = Faker()
 
 def seed_database():
-    with db.app.app_context():
+    with app.app_context():  
         # Delete existing records
         db.session.query(Recipe).delete()
 
@@ -14,9 +14,9 @@ def seed_database():
             title = fake.sentence()
             ingredients = "\n".join(fake.sentences(3))
             instructions = "\n".join(fake.sentences(5))
-            area = fake.country()
+            country = fake.country()
 
-            recipe = Recipe(title=title, ingredients=ingredients, instructions=instructions, area=area)
+            recipe = Recipe(title=title, ingredients=ingredients, instructions=instructions, country=country)
             db.session.add(recipe)
 
         db.session.commit()
