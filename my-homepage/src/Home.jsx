@@ -14,13 +14,22 @@ function Home() {
   return (
     <div style={{ position: 'relative', width: '100%', height: '600px' }}>
       {/* Slideshow container */}
-      <Slide easing="ease" duration={3000} transitionDuration={500} infinite={true} indicators={true} arrows={false} autoplay={true}>
+      <Slide easing="ease" duration={2000} transitionDuration={500} infinite={true} indicators={true} arrows={false} autoplay={true}>
         {images.map((each, index) => (
           <div key={index} className="each-slide" style={{ 'backgroundImage': `url(${each})`, width: '100%', height: '600px', backgroundSize: 'cover', backgroundPosition: 'center' }}>
             {/* Optional overlay or content could go here */}
           </div>
         ))}
       </Slide>
+
+      {/* Welcome Text Overlay */}
+      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white', textAlign: 'center', zIndex: 20, fontSize: '1.3rem', // Set background color to black
+    padding: '20px', // Add some padding around the text
+    borderRadius: '15px', // Rounded corners
+    }}>
+        <h1>Welcome to Africa Gourmet Cuisine Hub</h1>
+        <h3>We have the best recipes for making your favorite food.</h3>
+      </div>
 
       {/* Navigation bar positioned on top of the slideshow */}
       <nav style={{ position: 'absolute', top: '20px', right: '20px', display: 'inline-block' }}>
