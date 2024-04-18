@@ -2,9 +2,12 @@
 
 from flask import Flask, request, make_response, jsonify
 from flask_marshmallow import Marshmallow
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+from marshmallow import ValidationError, fields
+from email_validator import validate_email, EmailNotValidError
 from flask_migrate import Migrate
 from flask_restful import Api, Resource
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 import os
 from flask_cors import CORS
@@ -69,6 +72,14 @@ class ReviewSchema(ma.SQLAlchemyAutoSchema):
 
 review_schema = ReviewSchema()
 reviews_schema = ReviewSchema(many=True)
+
+class UserSignupSchema(ma.Schema):
+    name = fields.Str(required=True)
+    email = fields.Email(required=True)
+    password = fields.Str(required=True)
+
+user_signup_schema = UserSignupSchema()
+
 
 # API Resources
 api = Api(app)
@@ -157,7 +168,7 @@ class RecipeDetail(Resource):
 
 api.add_resource(RecipeDetail, '/recipes/<int:id>')
 
-
+#  For Login
 class UserPassword(Resource):
     def post(self):
         data = request.get_json()
@@ -168,7 +179,42 @@ class UserPassword(Resource):
             return {'message': 'Invalid password'}, 401
 
 
-api.add_resource(UserPassword, '/user/check-password')
+api.add_resource(UserPassword, '/login')
+
+class UserSignup(Resource):
+    def post(self):
+        # Parse incoming JSON data
+        json_data = request.get_json()
+        
+        # Validate JSON data against the schema
+        try:
+            validated_data = user_signup_schema.load(json_data)
+        except ValidationError as err:
+            return jsonify(err.messages)
+        
+        # Check if the email is already registered
+        existing_user = UserProfile.query.filter_by(email=validated_data['email']).first()
+        if existing_user:
+            return jsonify({'message': 'Email already registered'})
+        
+        # Hash the password
+        hashed_password = generate_password_hash(validated_data['password'])
+        
+        # Create a new user profile
+        new_user = UserProfile(
+            name=validated_data['name'],
+            email=validated_data['email'],
+            password_hash=hashed_password
+        )
+        
+        # Add the user profile to the database
+        db.session.add(new_user)
+        db.session.commit()
+        
+        return jsonify({'message': 'User registered successfully'})
+
+# Add the new resource to the API
+api.add_resource(UserSignup, '/signup')
 
 
 if __name__ == '__main__':

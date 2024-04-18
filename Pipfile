@@ -13,6 +13,7 @@ marshmallow = "*"
 werkzeug = "*"
 email-validator = "*"
 flask-cors = "*"
+marshmallow-sqlalchemy = "*"
 
 [dev-packages]
 
