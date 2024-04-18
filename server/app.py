@@ -168,6 +168,24 @@ class RecipeDetail(Resource):
 
 api.add_resource(RecipeDetail, '/recipes/<int:id>')
 
+# Define a new resource for searching recipes
+class RecipeSearch(Resource):
+    def get(self):
+        # Get the search query from the request parameters
+        search_query = request.args.get('q')
+
+        # Search for recipes containing the search query
+        recipes = Recipe.query.filter(Recipe.title.ilike(f'%{search_query}%')).all()
+
+        if not recipes:
+            return jsonify({'message': 'No recipes found. Showing similar results.'}), 404
+
+        # Serialize the recipes and return the results
+        return jsonify(recipes_schema.dump(recipes)), 200
+
+# Add the new resource to the API
+api.add_resource(RecipeSearch, '/recipes/search')
+
 #  For Login
 class UserPassword(Resource):
     def post(self):
