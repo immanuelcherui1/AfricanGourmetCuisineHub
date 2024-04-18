@@ -12,6 +12,7 @@ flask-restful = "*"
 marshmallow = "*"
 werkzeug = "*"
 email-validator = "*"
+flask-cors = "*"
 
 [dev-packages]
 
